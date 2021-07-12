@@ -1,0 +1,210 @@
+<header>
+
+    <div class="main_header header2">
+        <div class="container">
+            <div class="row flexRow">
+                <div class="col-md-3 col-sm-3 col-xs-12 flexCol">
+                    <div class="main_logo">
+                        <a href="{{url('search')}}"><img alt="img" src="{{asset('images/logo.png')}}"></a>
+                    </div>
+                </div>
+
+
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="login_div">
+                        <a href="javascript:void(0)">
+                            {{ Session::get('user') }}
+                            <span><i class="fa fa-user" aria-hidden="true"></i></span></a>
+
+                        <a href="{{url('cart')}}"> {{Helper::cartCount()}}<span><i class="fa fa-shopping-cart"
+                                                                                   aria-hidden="true"></i></span></a>
+
+                        @auth
+                            @if(Auth::user()->role=='admin')
+                                <a href="{{route('admin')}}">Dashboard</a>
+                            @endif
+                            @if((Auth::user()->is_vendor == null || Auth::user()->is_vendor == 0)  && Auth::user()->role=='user')
+                                <a href="{{route('user')}}">Dashboard</a>
+                            @endif
+                            @if((Auth::user()->is_vendor != null && Auth::user()->is_vendor != 0 && Auth::user()->is_vendor != 3 && Auth::user()->is_vendor == 1 ) && Auth::user()->role=='user')
+                                <a style="cursor: auto">Request Sent</a>
+                            @elseif((Auth::user()->is_vendor != null && Auth::user()->is_vendor != 0 && Auth::user()->is_vendor == 2 ) && Auth::user()->role=='vendor')
+                                <a href="{{route('vendor-dashboard')}}">Dashboard</a>
+                            @endif
+
+
+                            <a href="{{route('user.logout')}}">Logout</a>
+
+                        @else
+
+                            <a href="{{route('login.form')}}">Login </a> <a
+
+                                href="{{route('register.form')}}">Register</a>
+                        @endauth
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="header4">
+        <div class="container-fluid">
+            <div class="row flexRow">
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div class="sideNavBar">
+                        <button onclick="myFunction()">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <!-- <a href="#" >
+                          <i class="fa fa-bars" ></i>
+                        </a> -->
+                        <ul class="sideNavList" id="sideNavList">
+                            <li><a href="#">The History</a></li>
+                            <li><a href="#">Lifestyle</a></li>
+                            <li><a href="#">Videos</a></li>
+                            <li><a href="#">Pictures</a></li>
+                            <li><a href="#">feATURES</a></li>
+                            <li><a href="#">COMMUNITY</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 hidden-xs">
+                    <div class="menuSec">
+                        <ul id="menu">
+                            <style>
+                                .header4 .tab-content {
+                                    position: absolute;
+                                    width: 100%;
+                                }
+                            </style>
+
+                            @foreach($categories as $cat)
+                                <li><a data-toggle="pill" href="#_{{$cat->id}}" class="active">{{$cat->title}} {{$cat->id}}</a>
+                                </li>
+                            @endforeach
+
+                            <li><a data-toggle="pill" href="#home2">Brand</a>
+
+                            </li>
+                            <div class="tab-content">
+                                <div id=" _{{$cat->id}}" class="tab-pane fade in">
+                                    <ul>
+                                        @foreach($categories as $cat) {{$cat->id}} @endforeach
+                                        <div class="furtherNav">
+                                            <div class="furtherNavBtn">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <a href="#">Aftermarket</a>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <a href="#">OEM</a>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <a href="#">Salvage</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="furtherNavlinks">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <ul>
+                                                            @foreach($product_aftermake as $pro_aftermake)
+                                                                <li><a href="#">{{$pro_aftermake->title}}</a></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <ul>
+                                                            @foreach($product_oem as $pro_oem)
+                                                                <li><a href="#">{{$pro_oem->title}}</a></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <ul>
+                                                            @foreach ($product_salvage as $pro_salvage)
+                                                                <li><a href="#">{{$pro_salvage->title}} </a></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+
+
+                                <div id="home2" class="tab-pane fade in">
+                                    <ul>
+                                        <div class="furtherNav">
+                                            <div class="furtherNavBtn">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <a href="#">Aftermarket</a>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <a href="#">OEM</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="furtherNavlinks">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <ul>
+                                                            <li><a href="#">AEV </a></li>
+                                                            <li><a href="#">Alloy USA </a></li>
+                                                            <li><a href="#">Alpine </a></li>
+                                                            <li><a href="#">ARB </a></li>
+                                                            <li><a href="#">Bestop </a></li>
+                                                            <li><a href="#">Crown Automotive </a></li>
+                                                            <li><a href="#">Fox Racing Shox </a></li>
+                                                            <li><a href="#">G2 Axle & Gear </a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <ul>
+                                                            <li><a href="#">J.W. Speaker </a></li>
+                                                            <li><a href="#">K&N </a></li>
+                                                            <li><a href="#">KC HiLiTES </a></li>
+                                                            <li><a href="#">Omix-Ada </a></li>
+                                                            <li><a href="#">Poison Spyder </a></li>
+                                                            <li><a href="#">Pro Comp </a></li>
+                                                            <li><a href="#">Rubicon Express</a></li>
+                                                            <li><a href="#">Teraflex </a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <ul>
+                                                            <li><a href="#">Crown Automotive </a></li>
+                                                            <li><a href="#">Fox Racing Shox </a></li>
+                                                            <li><a href="#">G2 Axle & Gear</a></li>
+                                                            <li><a href="#">J.W. Speaker </a></li>
+                                                            <li><a href="#">K&N </a></li>
+                                                            <li><a href="#">KC HiLiTES </a></li>
+                                                            <li><a href="#">Omix-Ada </a></li>
+                                                            <li><a href="#">Poison Spyder </a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12 col">
+                    <div class="wlogo">
+                        <a href="#" class="wow fadeIn" data-wow-delay="0.2s" data-wow-duration="2s"><img
+                                src="{{asset('images/wLogo.png')}}" class="img-responsive" alt="logo"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
